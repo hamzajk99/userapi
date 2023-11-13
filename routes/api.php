@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/track-visit/{externalId}', [VisitController::class, 'trackVisit']);
 
 // Update User Stage Endpoint
-Route::post('/update-stage', [CustomUserController::class, 'updateUserStage']);
+Route::post('/update-custom-user-stage', [CustomUserController::class, 'updateUserStage']);
 
 // Dashboard Endpoint
-Route::get('/dashboard', [DashboardController::class, 'index']);

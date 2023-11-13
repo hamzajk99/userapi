@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visit;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalUniqueVisitors = Visit::distinct('external_id')->count();
+        $totalVisitors = Visit::distinct('external_id')->count();
 
-        $visitorsByStage = Visit::select('stage', \DB::raw('count(*) as total'))
-            ->groupBy('stage')
-            ->pluck('total', 'stage');
+        $stageCounts = Visit::groupBy('stage')
+            ->selectRaw('stage, count(*) as count')
+            ->pluck('count', 'stage');
 
-        return response()->json([
-            'totalUniqueVisitors' => $totalUniqueVisitors,
-            'visitorsByStage' => $visitorsByStage,
-        ]);
+            return view('dashboard', compact('totalVisitors', 'stageCounts'));
+
     }
 }
